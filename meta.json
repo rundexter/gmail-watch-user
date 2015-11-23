@@ -4,23 +4,26 @@
 {
     //Required. Inputs the module expects.
     "inputs": [
-        //e.g.
-        /*
         {
-            "id": "from",
-            "title":"From"
+            "id": "userId",
+            "title":"The user's email address"
+        },{
+            "id": "labelFilterAction",
+            "title":"labelFilterAction"
+        },{
+            "id": "labelIds",
+            "title":"labelIds"
+        },{
+            "id": "topicName",
+            "title":"topicName"
         }
-        */
     ],
     //Required. Outputs the module emits.
     "outputs": [
-      //e.g.
-      /*
         {
             "id": "from",
             "title":"From"
         }
-      */
     ],
     "title": "Google Watch User" /* Required.A display name for the module */
 }
