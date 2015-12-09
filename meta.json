@@ -25,5 +25,6 @@
             "title":"From"
         }
     ],
+    "icon": "google-plus",
     "title": "Google Watch User" /* Required.A display name for the module */
 }
