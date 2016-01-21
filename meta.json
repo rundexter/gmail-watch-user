@@ -7,13 +7,16 @@
         {
             "id": "userId",
             "title":"The user's email address"
-        },{
+        },
+        {
             "id": "labelFilterAction",
             "title":"labelFilterAction"
-        },{
+        },
+        {
             "id": "labelIds",
             "title":"labelIds"
-        },{
+        },
+        {
             "id": "topicName",
             "title":"topicName"
         }
@@ -21,10 +24,22 @@
     //Required. Outputs the module emits.
     "outputs": [
         {
-            "id": "from",
-            "title":"From"
+            "id": "expiration",
+            "title":"Expiration"
+        },
+        {
+            "id": "historyId",
+            "title":"History ID"
         }
     ],
+    "providers": [{
+        "name": "google",
+        "scopes": [
+            "https://mail.google.com/",
+            "https://www.googleapis.com/auth/gmail.modify",
+            "https://www.googleapis.com/auth/gmail.readonly"
+        ]
+    }],
     "icon": "google-plus",
     "title": "Google Watch User" /* Required.A display name for the module */
 }

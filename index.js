@@ -1,21 +1,20 @@
 var _ = require('lodash'),
-  google = require('googleapis'),
-  OAuth2 = google.auth.OAuth2;
+    util = require('./util.js'),
+    google = require('googleapis'),
+    service = google.gmail('v1');
+
+var pickInputs = {
+        'userId': { key: 'userId', validate: { req: true } },
+        'labelFilterAction': 'resource.labelFilterAction',
+        'labelIds': 'resource.labelIds',
+        'topicName': 'resource.topicName'
+    },
+    pickOutputs = {
+        'historyId': 'historyId',
+        'expiration': 'expiration'
+    };
 
 module.exports = {
-    checkAuthOptions: function (step, dexter) {
-
-        if(!step.input('userId').first()) {
-
-            this.fail('A userId input variable is required for this module');
-        }
-
-        if(!dexter.environment('google_access_token') || !dexter.environment('google_refresh_token')) {
-
-            this.fail('A google_access_token,google_refresh_token environment variable is required for this module');
-        }
-    },
-
     /**
      * The main entry point for the Dexter module
      *
@@ -23,20 +22,23 @@ module.exports = {
      * @param {AppData} dexter Container for all data used in this workflow.
      */
     run: function(step, dexter) {
+        var OAuth2 = google.auth.OAuth2,
+            oauth2Client = new OAuth2(),
+            credentials = dexter.provider('google').credentials();
+        var inputs = util.pickInputs(step, pickInputs),
+            validateErrors = util.checkValidateErrors(inputs, pickInputs);
 
-        this.checkAuthOptions(step, dexter);
+        if (validateErrors)
+            return this.fail(validateErrors);
 
-        var oauth2Client = new OAuth2();
-        oauth2Client.setCredentials({access_token: dexter.environment('google_access_token'), refresh_token: dexter.environment('google_refresh_token')});
-console.log(_.pick(step.inputs(), ['labelIds', 'labelFilterAction', 'topicName']));
+        // set credential
+        oauth2Client.setCredentials({
+            access_token: _.get(credentials, 'access_token')
+        });
         google.options({ auth: oauth2Client });
-        google.gmail('v1').users.watch({
-            auth: oauth2Client,
-            userId: step.input('userId').first(),
-            resource: _.pick(step.inputs(), ['labelIds', 'labelFilterAction', 'topicName'])
-        }, function (err, message) {
-            
-            err? this.fail(err) : this.complete(message);
+        service.users.watch(inputs, function (err, message) {
+
+            err? this.fail(err) : this.complete(util.pickOutputs(message, pickOutputs));
         }.bind(this));
 
     }
