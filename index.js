@@ -10,9 +10,9 @@ module.exports = {
             this.fail('A userId input variable is required for this module');
         }
 
-        if(!dexter.environment('google_access_token')) {
+        if(!dexter.environment('google_access_token') || !dexter.environment('google_refresh_token')) {
 
-            this.fail('A google_access_token environment variable is required for this module');
+            this.fail('A google_access_token,google_refresh_token environment variable is required for this module');
         }
     },
 
@@ -28,7 +28,7 @@ module.exports = {
 
         var oauth2Client = new OAuth2();
         oauth2Client.setCredentials({access_token: dexter.environment('google_access_token'), refresh_token: dexter.environment('google_refresh_token')});
-
+console.log(_.pick(step.inputs(), ['labelIds', 'labelFilterAction', 'topicName']));
         google.options({ auth: oauth2Client });
         google.gmail('v1').users.watch({
             auth: oauth2Client,
