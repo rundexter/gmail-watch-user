@@ -1,13 +1,17 @@
 {
-  "name": "google-watch-user",
-  "version": "0.0.1",
-  "description": "",
-  "main": "index.js",
-  "author": "Alexander",
-  "license": "ISC",
-  "private": true,
-  "dependencies": {
-    "googleapis": "^2.1.6",
-    "lodash": "^3.9.3"
-  }
+   "name": "google-watch-user",
+   "version": "0.0.1",
+   "description": "Set up or update a push notification watch on the given user mailbox",
+   "main": "index.js",
+   "author": "Run Dexter, Inc",
+   "license": "MIT",
+   "private": true,
+   "dependencies": {
+      "googleapis": "^2.1.6",
+      "lodash": "^3.9.3"
+   },
+   "repository": {
+      "type": "git",
+      "url": "https://github.com/rundexter/gmail-watch-user"
+   }
 }
