@@ -41,5 +41,5 @@
         ]
     }],
     "icon": "google-plus",
-    "title": "Google Watch User" /* Required.A display name for the module */
+    "title": "Gmail watch user" /* Required.A display name for the module */
 }
